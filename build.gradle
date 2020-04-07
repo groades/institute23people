@@ -59,7 +59,7 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
-	implementation('org.apache.tomcat.embed:tomcat-embed-jasper:8.0.47')
+	//implementation('org.apache.tomcat.embed:tomcat-embed-jasper:8.0.47')
 	
 	testCompile 'junit:junit:4.12'
   	testCompile 'com.google.truth:truth:0.33'
