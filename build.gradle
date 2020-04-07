@@ -1,8 +1,29 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.google.cloud.tools:appengine-gradle-plugin:2.2.0'
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.9.RELEASE"
+    }
+}
 plugins {
 	id 'org.springframework.boot' version '2.2.6.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
 }
+repositories {   // repositories for Jar's you access in your code
+  maven {
+    url 'https://oss.sonatype.org/content/repositories/snapshots' // SNAPSHOT repository (if needed)
+  }
+  mavenCentral()
+  jcenter()
+}
+
+apply plugin: 'java'                              // standard Java tasks
+apply plugin: 'war'                               // standard Web Archive plugin
+apply plugin: 'com.google.cloud.tools.appengine'  // App Engine tasks
+apply plugin: "io.spring.dependency-management"
 
 group = 'com.test'
 version = '0.0.1-SNAPSHOT'
@@ -16,16 +37,15 @@ configurations {
 	}
 }
 
-repositories {
-	mavenCentral()
-	jcenter()
-}
-
 ext {
 	set('springCloudVersion', "Hoxton.SR3")
 }
 
-apply plugin: 'appengine'
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
 
 dependencies {
 	implementation 'com.google.appengine:appengine-api-1.0-sdk:+'  // Latest App Engine Api's
@@ -39,7 +59,7 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
-	compile('org.apache.tomcat.embed:tomcat-embed-jasper:8.0.47')
+	implementation('org.apache.tomcat.embed:tomcat-embed-jasper:8.0.47')
 	
 	testCompile 'junit:junit:4.12'
   	testCompile 'com.google.truth:truth:0.33'
@@ -50,11 +70,6 @@ dependencies {
   	testCompile 'com.google.appengine:appengine-tools-sdk:+'
 }
 
-dependencyManagement {
-	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-	}
-}
 
 // Always run unit tests
 //appengineDeploy.dependsOn test
