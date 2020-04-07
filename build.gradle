@@ -25,7 +25,7 @@ ext {
 	set('springCloudVersion', "Hoxton.SR3")
 }
 
-apply plugin: 'com.google.cloud.tools.appengine'
+apply plugin: 'appengine'
 
 dependencies {
 	implementation 'com.google.appengine:appengine-api-1.0-sdk:+'  // Latest App Engine Api's
