@@ -79,7 +79,7 @@ appengine {  // App Engine tasks configuration
   deploy {   // deploy configuration
   	stopPreviousVersion = true  
     promote = true
-    projectId = System.getenv('GOOGLE_CLOUD_PROJECT')
+    projectId = 'institute'
     version = '1'
   }
 }
