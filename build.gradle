@@ -55,8 +55,8 @@ dependencyManagement {
 }
 
 // Always run unit tests
-appengineDeploy.dependsOn test
-appengineStage.dependsOn test
+//appengineDeploy.dependsOn test
+//appengineStage.dependsOn test
 
 appengine {  // App Engine tasks configuration
   deploy {   // deploy configuration
