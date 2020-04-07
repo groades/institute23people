@@ -7,6 +7,7 @@ plugins {
 group = 'com.test'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
+targetCompatibility = 1.8 
 
 configurations {
 	developmentOnly
@@ -17,6 +18,7 @@ configurations {
 
 repositories {
 	mavenCentral()
+	jcenter()
 }
 
 ext {
@@ -24,6 +26,9 @@ ext {
 }
 
 dependencies {
+	compile 'com.google.appengine:appengine-api-1.0-sdk:+'  // Latest App Engine Api's
+  	compile 'jstl:jstl:1.2'
+  	
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.cloud:spring-cloud-config-server'
@@ -33,6 +38,14 @@ dependencies {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 	compile('org.apache.tomcat.embed:tomcat-embed-jasper:8.0.47')
+	
+	testCompile 'junit:junit:4.12'
+  	testCompile 'com.google.truth:truth:0.33'
+  	testCompile 'org.mockito:mockito-all:1.10.19'
+
+  	testCompile 'com.google.appengine:appengine-testing:+'
+  	testCompile 'com.google.appengine:appengine-api-stubs:+'
+  	testCompile 'com.google.appengine:appengine-tools-sdk:+'
 }
 
 dependencyManagement {
@@ -41,6 +54,28 @@ dependencyManagement {
 	}
 }
 
+// Always run unit tests
+appengineDeploy.dependsOn test
+appengineStage.dependsOn test
+
+appengine {  // App Engine tasks configuration
+  deploy {   // deploy configuration
+    projectId = System.getenv('GOOGLE_CLOUD_PROJECT')
+    version = '1'
+  }
+}
+
 test {
-	useJUnitPlatform()
+  useJUnit()
+  testLogging.showStandardStreams = true
+  beforeTest { descriptor ->
+     logger.lifecycle("test: " + descriptor + "  Running")
+  }
+
+  onOutput { descriptor, event ->
+     logger.lifecycle("test: " + descriptor + ": " + event.message )
+  }
+  afterTest { descriptor, result ->
+    logger.lifecycle("test: " + descriptor + ": " + result )
+  }
 }
