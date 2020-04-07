@@ -52,14 +52,14 @@ dependencies {
   	implementation 'jstl:jstl:1.2'
   	
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web', { exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat' }
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.cloud:spring-cloud-config-server'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
-	//implementation('org.apache.tomcat.embed:tomcat-embed-jasper:8.0.47')
+	implementation('org.apache.tomcat.embed:tomcat-embed-jasper:8.0.47')
 	
 	testCompile 'junit:junit:4.12'
   	testCompile 'com.google.truth:truth:0.33'
