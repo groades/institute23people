@@ -48,6 +48,7 @@ dependencyManagement {
 }
 
 dependencies {
+	implementation 'com.google.cloud.sql:mysql-socket-factory-connector-j-8:1.0.15'
 	implementation 'com.google.appengine:appengine-api-1.0-sdk:+'  // Latest App Engine Api's
   	implementation 'jstl:jstl:1.2'
   	
